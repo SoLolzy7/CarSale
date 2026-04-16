@@ -54,7 +54,9 @@
                                             <span class="status-dot"></span>
                                             Completed
                                         </span>
-                                        <span class="order-date">{{ order.purchase_date[:10] }}</span>
+                                        <span class="order-date">
+  {{ order.purchase_date[:10] if order.purchase_date else "N/A" }}
+</span>
                                     </div>
                                     <div class="order-id-badge">
                                         Order #{{ order.id }}
