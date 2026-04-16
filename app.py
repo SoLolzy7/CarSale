@@ -54,7 +54,6 @@ class Order(db.Model):
 
 # ================== CREATE TABLE ==================
 with app.app_context():
-    db.drop_all() 
     db.create_all()
 
 # ================== LOGIN ==================
