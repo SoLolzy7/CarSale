@@ -7,14 +7,22 @@ from functools import wraps
 
 # Initialize Flask app
 app = Flask(__name__)
-app.secret_key = 'super-secret-key-change-in-production'  # Change this in production!
 
-# Database configuration
-DATABASE = 'car_shop.db'
+# 🔥 SECRET KEY (đừng hardcode)
+app.secret_key = os.getenv("SECRET_KEY", "dev-secret-key")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+# 🔥 DATABASE (PostgreSQL Railway)
+db_url = os.getenv("DATABASE_URL")
+
+# fix lỗi postgres://
+if db_url and db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-stripe.api_key = app.config['STRIPE_SECRET_KEY']
+
+# 🔥 STRIPE (FIX CHUẨN)
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 # Flask-Login setup
 login_manager = LoginManager()
