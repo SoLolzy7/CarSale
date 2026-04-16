@@ -12,8 +12,8 @@ app.secret_key = 'super-secret-key-change-in-production'  # Change this in produ
 # Database configuration
 DATABASE = 'car_shop.db'
 
-app.config['STRIPE_PUBLISHABLE_KEY'] = os.getenv("STRIPE_PUBLISHABLE_KEY")
-app.config['STRIPE_SECRET_KEY'] = os.getenv("STRIPE_SECRET_KEY")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
 
 # Flask-Login setup
