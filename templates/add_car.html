@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Add Car{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="form-container">
+            <h1>Add New Car</h1>
+            <form method="POST" class="car-form">
+                <div class="form-group">
+                    <label for="name">Car Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="price">Price (USD):</label>
+                    <input type="number" id="price" name="price" step="0.01" min="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image_url">Image URL:</label>
+                    <input type="url" id="image_url" name="image_url" placeholder="https://example.com/car.jpg" required>
+                    <small>Use a public image URL for the car</small>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Add Car</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

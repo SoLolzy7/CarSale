@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1 class="page-title">My Orders</h1>
+                <p class="page-description">Track and manage your vehicle purchases</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="orders-section">
+        <div class="container">
+            {% if orders %}
+                <!-- Order Statistics -->
+                <div class="order-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-info">
+                            <span class="stat-value">{{ orders|length }}</span>
+                            <span class="stat-label">Total Orders</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-info">
+                            {% set total = orders|sum(attribute='amount') %}
+                            <span class="stat-value">${{ "{:,.0f}".format(total/100) }}</span>
+                            <span class="stat-label">Total Spent</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders List -->
+                <div class="orders-list">
+                    {% for order in orders %}
+                        <div class="order-card">
+                            <div class="order-image-wrapper">
+                                <img src="{{ order.image_url }}" 
+                                     alt="{{ order.car_name }}" 
+                                     class="order-image"
+                                     loading="lazy"
+                                     onerror="this.src='https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400'">
+                            </div>
+                            
+                            <div class="order-details">
+                                <div class="order-header">
+                                    <div class="order-status">
+                                        <span class="status-badge">
+                                            <span class="status-dot"></span>
+                                            Completed
+                                        </span>
+                                        <span class="order-date">{{ order.purchase_date[:10] }}</span>
+                                    </div>
+                                    <div class="order-id-badge">
+                                        Order #{{ order.id }}
+                                    </div>
+                                </div>
+                                
+                                <h3 class="vehicle-name">{{ order.car_name }}</h3>
+                                
+                                <div class="price-details">
+                                    <span class="price-label">Total Paid</span>
+                                    <span class="price-amount">${{ "{:,.0f}".format(order.amount/100) }}</span>
+                                </div>
+                                
+                                <div class="order-actions">
+                                    <a href="{{ url_for('index') }}" class="btn btn-primary">
+                                        Shop Again
+                                        <span class="btn-icon">→</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <!-- Empty State -->
+                <div class="empty-state">
+                    <div class="empty-state-icon">🚗</div>
+                    <h2 class="empty-state-title">No vehicles in your garage yet</h2>
+                    <p class="empty-state-text">
+                        Your journey to owning a premium vehicle starts here. 
+                        Explore our curated collection of exceptional automobiles.
+                    </p>
+                    <div class="empty-state-actions">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary">
+                            Browse Collection
+                            <span class="btn-icon">→</span>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

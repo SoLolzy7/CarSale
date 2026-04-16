@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Premium Vehicles{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="hero-pattern"></div>
+        </div>
+        <div class="hero-content">
+            <span class="hero-badge">Premium Automotive Marketplace</span>
+            <h1 class="hero-title">
+                Discover Your<br>
+                <span class="gradient-text">Perfect Drive</span>
+            </h1>
+            <p class="hero-subtitle">
+                Curated selection of luxury and performance vehicles,<br>
+                ready for immediate delivery
+            </p>
+        </div>
+    </section>
+
+    <!-- Vehicles Section -->
+    <section class="vehicles-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-header-left">
+                    <span class="section-subtitle">Curated Collection</span>
+                    <h2 class="section-title">Featured Vehicles</h2>
+                </div>
+            </div>
+
+            {% if cars %}
+                <div class="vehicle-grid">
+                    {% for car in cars %}
+                        <div class="vehicle-card">
+                            <div class="card-badge">
+                                <span class="badge instant">Available Now</span>
+                            </div>
+                            
+                            <div class="card-image-wrapper">
+                                <img src="{{ car.image_url }}" 
+                                     alt="{{ car.name }}" 
+                                     class="card-image"
+                                     loading="lazy">
+                            </div>
+                            
+                            <div class="card-content">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{ car.name }}</h3>
+                                </div>
+                                
+                                <p class="card-description">{{ car.description }}</p>
+                                
+                                <div class="card-footer">
+                                    <div class="price-section">
+                                        <span class="price-label">Price</span>
+                                        <span class="price-value">${{ "{:,.0f}".format(car.price/100) }}</span>
+                                    </div>
+                                    
+                                    {% if current_user.is_authenticated %}
+                                        <a href="{{ url_for('buy_car', car_id=car.id) }}" class="btn btn-primary">
+                                            Purchase Now
+                                            <span class="btn-icon">→</span>
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ url_for('login') }}" class="btn btn-secondary">
+                                            Login to Purchase
+                                            <span class="btn-icon">→</span>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">🚗</div>
+                    <h3 class="empty-state-title">No Vehicles Available</h3>
+                    <p class="empty-state-text">Please check back later.</p>
+                    {% if current_user.is_authenticated and current_user.is_admin %}
+                        <a href="{{ url_for('add_car') }}" class="btn btn-primary">
+                            Add Vehicle
+                            <span class="btn-icon">→</span>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
