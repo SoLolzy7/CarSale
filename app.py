@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 import stripe
+from datetime import datetime
 from functools import wraps
 
 # ================== INIT ==================
@@ -49,6 +50,7 @@ class Order(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     car_id = db.Column(db.Integer, db.ForeignKey('car.id'))
     amount = db.Column(db.Integer)
+    purchase_date = db.Column(db.DateTime, default=datetime.utcnow)  
 
 # ================== CREATE TABLE ==================
 with app.app_context():
