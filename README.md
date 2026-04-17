@@ -1,6 +1,4 @@
-[cite_start]Dưới đây là bản `README.md` đã được mở rộng và tối ưu hóa chuyên sâu hơn dựa trên báo cáo khoa học của Nhóm 1[cite: 1, 3]. Bản này bổ sung thêm các phần về kiến trúc hệ thống, chi tiết kỹ thuật và định hướng phát triển để tăng tính chuyên nghiệp trên GitHub.
 
------
 
 # Online Luxury Car Shop Web Application
 
